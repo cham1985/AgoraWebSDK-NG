@@ -4,12 +4,18 @@ import useAgora from './hooks/useAgora';
 import MediaPlayer from './components/MediaPlayer';
 import './Call.css';
 
-const client = AgoraRTC.createClient({ codec: 'h264', mode: 'rtc' });
+/**
+ * 创建本地客户端 https://docs.agora.io/cn/Voice/start_call_audio_web_ng?platform=Web
+ * 一对一或多人通话中，建议设为 "rtc"，使用通信场景。
+ * 互动直播中，建议设为 "live"，使用直播场景。
+ * codec 用于设置浏览器使用的编解码格式。如果你需要使用 Safari 12.1 及之前版本，将该参数设为 "h264"；其他情况我们推荐使用 "vp8"。
+ */
+const client = AgoraRTC.createClient({ codec: 'vp8', mode: 'rtc' });
 
 function Call() {
-  const [ appid, setAppid ] = useState('');
-  const [ token, setToken ] = useState('');
-  const [ channel, setChannel ] = useState('');
+  const [ appid, setAppid ] = useState('466efbaa001b469e93829bde1d2544f2');
+  const [ token, setToken ] = useState('006466efbaa001b469e93829bde1d2544f2IADPUbJH1Y2oCTI3j/BIDTql0grNQg0YypA+ZELrY4aeCNJjSIgAAAAAEABoKgnHuHkvYAEAAQC3eS9g');
+  const [ channel, setChannel ] = useState('123');
   const {
     localAudioTrack, localVideoTrack, leave, join, joinState, remoteUsers
   } = useAgora(client);
@@ -41,7 +47,7 @@ function Call() {
         </div>
         {remoteUsers.map(user => (<div className='remote-player-wrapper' key={user.uid}>
             <p className='remote-player-text'>{`remoteVideo(${user.uid})`}</p>
-            <MediaPlayer videoTrack={user.videoTrack} audioTrack={user.audioTrack}></MediaPlayer>
+            {/*<MediaPlayer videoTrack={user.videoTrack} audioTrack={user.audioTrack}></MediaPlayer>*/}
           </div>))}
       </div>
     </div>
